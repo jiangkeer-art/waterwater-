@@ -35,7 +35,9 @@ while True:
         # 绘出围绕图像上条形码的边界框
         (x, y, w, h) = barcode.rect
         cv2.rectangle(frame,(x, y),(x+ w, y + h),(0,0,255), 2)
-
+        cropped = frame[x+w:y+h,x:y]  # 裁剪坐标为[y0:y1, x0:x1]
+        if cropped.size != 0:
+            cv2.imwrite('cv_cut_thor.jpg', cropped)
         # 条形码数据为字节对象，所以如果我们想把它画出来
         # 需要先把它转换成字符串
         barcodeData = barcode.data.decode("utf-8")
